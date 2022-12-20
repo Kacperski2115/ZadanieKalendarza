@@ -1,7 +1,6 @@
 package com.example.zadaniekalendarz
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -9,12 +8,9 @@ import android.widget.CalendarView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.alpha
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
-import kotlin.math.absoluteValue
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -34,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         calendar.maxDate = LocalDate.now().plusYears(2).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
 
-        val dataPocz = mutableListOf<Int>(0,0,0)
-        val dataKon = mutableListOf<Int>(0,0,0)
+        val startdate = mutableListOf<Int>(0,0,0)
+        val enddate = mutableListOf<Int>(0,0,0)
         val data = arrayListOf<Int>(0,0,0)
 
         calendar.setOnDateChangeListener(){CalendarView, dzien, mies, rok ->
@@ -45,27 +41,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         startbutton.setOnClickListener {
-            dataPocz[0] = data[0]
-            dataPocz[1] = data[1]
-            dataPocz[2] = data[2]
-            startshow.text = "Początek wyjazdu: " +data[0].toString()+"-"+data[1].toString()+"-"+data[2].toString();
-            calendar.selectedDateVerticalBar
+            startdate[0] = data[0]
+            startdate[1] = data[1]
+            startdate[2] = data[2]
+            startshow.text = "Data wyjazdu " +data[0].toString()+"-"+data[1].toString()+"-"+data[2].toString();
         }
         endbutton.setOnClickListener {
-            dataKon[0] = data[0]
-            dataKon[1] = data[1]
-            dataKon[2] = data[2]
-            endshow.text = "Koniec wyjazdu: " +data[0].toString()+"-"+data[1].toString()+"-"+data[2].toString();
+            enddate[0] = data[0]
+            enddate[1] = data[1]
+            enddate[2] = data[2]
+            endshow.text = "Data przyjazdu " +data[0].toString()+"-"+data[1].toString()+"-"+data[2].toString();
 
-            if(dataPocz[0] != 0 && dataKon[0] != 0)
-                if(dataPocz[0] > dataKon[0] || dataPocz[2] > dataKon[2] && dataPocz[1] == dataKon[1])
-                    show.text = "Nie można sie cofać w czasie :)"
+            if(startdate[0] != 0 && enddate[0] != 0)
+                if(startdate[0] > enddate[0] || startdate[2] > enddate[2] && startdate[1] == enddate[1])
+                    show.text = "Nieprawidłowa data-Data wyjazdu musi być wcześniej niż data przyjazdu"
                 else{
-                    val dataendshow=(dataKon[0]*360) + (dataKon[1]*30) + dataKon[2]
-                    val datastartshow=(dataPocz[0]*360) + (dataPocz[1]*30) + dataPocz[2]
+                    val dataendshow=(enddate[0]*360) + (enddate[1]*30) + enddate[2]
+                    val datastartshow=(startdate[0]*360) + (startdate[1]*30) + startdate[2]
                     val datashow=dataendshow.toChar()-datastartshow.toChar()
                     show.text="Wyjazd trwa "+datashow.toString()+" dni"
-
                 }
         }
     }
