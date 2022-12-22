@@ -40,9 +40,9 @@ class MainActivity : AppCompatActivity() {
         startbutton.setOnClickListener {
             val calendar = MaterialDatePicker.Builder.dateRangePicker()
                 .setCalendarConstraints(constraints)
-                .setTitleText("Select dates")
+                .setTitleText("Wybierz date wyjazdu i przyjazdu")
                 .build()
-            calendar.show(supportFragmentManager, "Date_picker_tag")
+            calendar.show(supportFragmentManager, "Kalendarz")
             calendar.addOnPositiveButtonClickListener { datePicked->
                 StartDate = datePicked.first
                 EndDate = datePicked.second
