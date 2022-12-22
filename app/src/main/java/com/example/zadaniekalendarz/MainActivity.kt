@@ -14,6 +14,8 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 
+//Kacper Michalak 2pr
+
 @Suppress("DEPRECATION")
 var StartDate : Long=1
 var EndDate : Long=1
